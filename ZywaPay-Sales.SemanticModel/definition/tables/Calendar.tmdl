@@ -1,0 +1,87 @@
+table Calendar
+	lineageTag: 3b7093ba-987e-428f-92c6-62cca50ab3ef
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: Short Date
+		lineageTag: 08b7b6e7-b5a9-45db-8b91-2f6161925e45
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: fb8ad51f-7c5e-4c43-808b-ad3fdd3a9761
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: f36de1ee-324c-43d2-a54b-33aacb4bf10d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		isHidden
+		formatString: 0
+		lineageTag: f93cbfdb-3d2e-4ab8-b8cf-99df8983f5a2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthNumber]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekday
+		lineageTag: 7d85e577-13f7-4d67-9da2-f2c460c997bc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Weekday]
+		sortByColumn: WeekNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekNumber
+		isHidden
+		formatString: 0
+		lineageTag: e2cef48c-ca99-4f48-a55e-7a98d023cfab
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekNumber]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Qtr
+		lineageTag: 9b6054ac-bbb9-4bd9-861b-9b46df51fbfb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Qtr]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source = ```
+				
+				    ADDCOLUMNS(
+				        CALENDARAUTO(),
+				            "Year",YEAR([Date]),
+				            "Month",FORMAT([Date],"mmm"),
+				            "MonthNumber", MONTH([Date]),
+				            "Weekday", FORMAT([Date], "ddd"),
+				            "WeekNumber", WEEKDAY([Date]),
+				            "Qtr", FORMAT([Date], "\QQ")
+				            
+				            )
+				```
+
+	annotation PBI_Id = 010df779a6b24480988e550249dfdf14
+

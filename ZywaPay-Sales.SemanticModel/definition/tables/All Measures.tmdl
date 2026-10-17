@@ -1,0 +1,45 @@
+table 'All Measures'
+	lineageTag: 79e0cf93-0395-4fb9-850f-636d9374f92e
+
+	measure 'Amount below Avg' = ```
+			
+			    VAR VAmount= [Total Amount]
+			    VAR VResult= IF(VAmount<0,VAmount,0)
+			
+			    RETURN
+			    VResult
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 8aeb2a78-f998-492b-aa65-1330178bb88e
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Amount above Avg' = ```
+			
+			    VAR VAmount= [Total Amount]
+			
+			    RETURN
+			    IF(VAmount>0,VAmount,0)
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 35009135-5f38-4338-9339-8d7e5154a27b
+
+	column Column1
+		dataType: string
+		lineageTag: 492825c0-209a-4151-9fde-03dcfd521316
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'All Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

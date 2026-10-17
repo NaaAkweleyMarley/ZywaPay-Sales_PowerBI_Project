@@ -1,0 +1,111 @@
+table Transactions_Fact
+	lineageTag: bfa1f8b1-cc0f-4c55-9ee0-794b2da8b877
+
+	measure 'Total Transactions' = COUNTROWS(Transactions_Fact)
+		formatString: 0
+		lineageTag: aa279392-87be-4892-a327-e00a2b56121b
+
+	measure 'Total Amount' = SUM(Transactions_Fact[AmountGHS])
+		lineageTag: 943c4881-a0ff-4e31-8351-b06310edcff6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Success %' =
+			
+			DIVIDE(
+			    CALCULATE(COUNTROWS(Transactions_Fact),
+			              Transactions_Fact[TransactionStatus] = "Completed"),
+			    COUNTROWS(Transactions_Fact),
+			    0
+			)
+		lineageTag: 20f40315-6eb8-48dd-a139-54edd6ca5a66
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Amount' = AVERAGE(Transactions_Fact[AmountGHS])
+		lineageTag: dcb686b1-08db-4bbc-bdbd-265d9742bf86
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TransactionID
+		dataType: string
+		lineageTag: 73ca4bbc-706e-4eb5-8fd6-cc67597df140
+		summarizeBy: none
+		sourceColumn: TransactionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2a05ee3f-89d0-4465-8a6f-4a9f63a5ed74
+		summarizeBy: none
+		sourceColumn: TransactionDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CustomerID
+		dataType: string
+		lineageTag: e6d53cff-2f56-40b2-be52-ec01094b86db
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column BranchID
+		dataType: string
+		lineageTag: 1466f4d3-59db-4fad-adc1-26b3126b1b01
+		summarizeBy: none
+		sourceColumn: BranchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethod
+		dataType: string
+		lineageTag: dedbe31d-6da6-44ef-82e0-a3259368ebad
+		summarizeBy: none
+		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	column AmountGHS
+		dataType: double
+		lineageTag: d2ddd755-d094-4d83-b9b0-43772b467578
+		summarizeBy: sum
+		sourceColumn: AmountGHS
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TransactionStatus
+		dataType: string
+		lineageTag: ff5fd7e9-ee12-4c86-82b1-bf921c1b0463
+		summarizeBy: none
+		sourceColumn: TransactionStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServiceType
+		dataType: string
+		lineageTag: 8b0aae4b-b262-427a-96ad-c15858c63180
+		summarizeBy: none
+		sourceColumn: ServiceType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Transactions_Fact = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\DELL\Documents\Data Modelling dataset - Power BI.xlsx"), null, true),
+				    Transactions_Fact_Sheet = Source{[Item="Transactions_Fact",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Transactions_Fact_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"TransactionID", type text}, {"TransactionDate", type date}, {"CustomerID", type text}, {"BranchID", type text}, {"PaymentMethod", type text}, {"AmountGHS", type number}, {"TransactionStatus", type text}, {"ServiceType", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

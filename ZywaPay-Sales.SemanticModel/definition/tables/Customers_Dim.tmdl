@@ -1,0 +1,65 @@
+table Customers_Dim
+	lineageTag: 4dbfe44c-804f-4bca-85ad-0ff70ad36eec
+
+	column CustomerID
+		dataType: string
+		lineageTag: 0948e3d2-443b-4199-81b9-79f397b9d9f1
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullName
+		dataType: string
+		lineageTag: 64f0f107-2602-404a-b678-b0d7213ebba0
+		summarizeBy: none
+		sourceColumn: FullName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 78e5baec-4f5b-43bc-949c-699c45f7542b
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: e7048861-8323-4611-8ac8-9cec6f339a01
+		summarizeBy: none
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 41b98987-e455-41fc-82e7-e3a1a3aefe55
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerSegment
+		dataType: string
+		lineageTag: 7fee050b-bd50-47d7-a688-85c95a2ea509
+		summarizeBy: none
+		sourceColumn: CustomerSegment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customers_Dim = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\DELL\Documents\Data Modelling dataset - Power BI.xlsx"), null, true),
+				    Customers_Dim_Sheet = Source{[Item="Customers_Dim",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Customers_Dim_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerID", type text}, {"FullName", type text}, {"Gender", type text}, {"Age", Int64.Type}, {"Region", type text}, {"CustomerSegment", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

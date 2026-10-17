@@ -1,0 +1,125 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY25SU10",
+      "reportVersionAtImport": {
+        "visual": "2.1.0",
+        "report": "3.0.0",
+        "page": "2.3.0"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Bloom26358098893627513.json",
+      "reportVersionAtImport": {
+        "visual": "2.1.0",
+        "report": "3.0.0",
+        "page": "2.3.0"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "ChicletSlicer1448559807354",
+    "WordCloud1447959067750",
+    "heatmapF244EA9EE1F34E828A80CF19B41976F8",
+    "RiskHeatmapA1E4D7191E504BBA9F44FE76C254B319",
+    "chatpowerbi_ai"
+  ],
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY25SU10",
+          "path": "BaseThemes/CY25SU10.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Bloom26358098893627513.json",
+          "path": "Bloom26358098893627513.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "LogoMakr-11qswa9989269628870213.png",
+          "path": "LogoMakr-11qswa9989269628870213.png",
+          "type": "Image"
+        },
+        {
+          "name": "LogoMakr-1qyp772661080164181291.png",
+          "path": "LogoMakr-1qyp772661080164181291.png",
+          "type": "Image"
+        },
+        {
+          "name": "LogoMakr-5sd6qm21837578723520645.png",
+          "path": "LogoMakr-5sd6qm21837578723520645.png",
+          "type": "Image"
+        },
+        {
+          "name": "LogoMakr-74wh7o0043891364188952675.png",
+          "path": "LogoMakr-74wh7o0043891364188952675.png",
+          "type": "Image"
+        },
+        {
+          "name": "LogoMakr-9gfsou804692446052559.png",
+          "path": "LogoMakr-9gfsou804692446052559.png",
+          "type": "Image"
+        },
+        {
+          "name": "Picture78185353505858136.png",
+          "path": "Picture78185353505858136.png",
+          "type": "Image"
+        },
+        {
+          "name": "Picture85891374574966874.png",
+          "path": "Picture85891374574966874.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

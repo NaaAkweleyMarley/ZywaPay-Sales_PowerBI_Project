@@ -1,0 +1,17 @@
+relationship 4d2d4770-6678-4879-89aa-676cb872a135
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Branches_Dim.OpenedDate
+	toColumn: LocalDateTable_bdaef7c5-3b1b-4ff9-8e90-fcbf908042bd.Date
+
+relationship AutoDetected_329125cb-a209-47ab-8095-d28712803833
+	fromColumn: Transactions_Fact.BranchID
+	toColumn: Branches_Dim.BranchID
+
+relationship AutoDetected_fb93205b-071d-471f-8990-a32d7cc9e258
+	fromColumn: Transactions_Fact.CustomerID
+	toColumn: Customers_Dim.CustomerID
+
+relationship b4892c4f-2547-95d1-dc2b-2983dbdfe5d8
+	fromColumn: Transactions_Fact.TransactionDate
+	toColumn: Calendar.Date
+

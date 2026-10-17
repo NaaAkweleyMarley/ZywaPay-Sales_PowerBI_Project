@@ -1,0 +1,67 @@
+table Branches_Dim
+	lineageTag: 1f4ad532-fc98-40a5-9d24-3937559d6a8d
+
+	column BranchID
+		dataType: string
+		lineageTag: 3a9ec664-48ca-43f5-a0f9-895eb312e559
+		summarizeBy: none
+		sourceColumn: BranchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column BranchName
+		dataType: string
+		lineageTag: a6d2e00f-d304-4888-a215-f6e8e6b0d2af
+		summarizeBy: none
+		sourceColumn: BranchName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 4f0e182f-a11f-4a99-a8b7-12bef6a3d010
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column ManagerName
+		dataType: string
+		lineageTag: 8951a6ac-ea5d-40ec-899b-e6a12ab40102
+		summarizeBy: none
+		sourceColumn: ManagerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column OpenedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 389329a1-d6b6-4562-8c39-3188c5c47ddd
+		summarizeBy: none
+		sourceColumn: OpenedDate
+
+		variation Variation
+			isDefault
+			relationship: 4d2d4770-6678-4879-89aa-676cb872a135
+			defaultHierarchy: LocalDateTable_bdaef7c5-3b1b-4ff9-8e90-fcbf908042bd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Branches_Dim = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\DELL\Documents\Data Modelling dataset - Power BI.xlsx"), null, true),
+				    Branches_Dim_Sheet = Source{[Item="Branches_Dim",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Branches_Dim_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"BranchID", type text}, {"BranchName", type text}, {"Region", type text}, {"ManagerName", type text}, {"OpenedDate", type date}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","ZywaPay","",Replacer.ReplaceText,{"BranchName"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
